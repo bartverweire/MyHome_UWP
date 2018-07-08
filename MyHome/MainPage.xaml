@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="MyHome.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyHome"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
+
+    <Grid>
+        <Grid.Resources>
+            <local:ShutterStateConverter x:Key="ShutterStateConverter" />
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <TextBlock>Lights</TextBlock>
+            <ListView ItemsSource="{x:Bind Path=myHome.lights.components}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Width="200" VerticalAlignment="Center" Text="{Binding Path=name}" />
+                            <TextBlock Width="20" VerticalAlignment="Center" Text="{Binding Path=Status, Mode=TwoWay}" />
+                            <ToggleSwitch x:Name="LightStatus" IsOn="{Binding Path=IsOn, Mode=TwoWay}" Toggled="LightStatus_Toggled"
+                                          HorizontalAlignment="Right"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <TextBlock>Shutters</TextBlock>
+            <ListView ItemsSource="{x:Bind Path=myHome.shutters.components}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Width="200" VerticalAlignment="Center" Text="{Binding Path=name}" />
+                            <TextBlock Width="20" VerticalAlignment="Center" Text="{Binding Path=Status, Mode=TwoWay}" />
+                            <Button x:Name="ShutterDown" Background="White" Click="ShutterDown_Click">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" 
+                                          Glyph="&#xE70D;" 
+                                          FontWeight="Bold" 
+                                          Foreground="{Binding Path=IsDown, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Green'}" />
+                            </Button>
+                            <Button x:Name="ShutterStop" Background="White" Click="ShutterStop_Click">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" 
+                                          Glyph="&#xE711;"
+                                          FontWeight="Bold"
+                                          Foreground="{Binding Path=IsStopped, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Red'}"/>
+                            </Button>
+                            <Button x:Name="ShutterUp" Background="White" Click="ShutterUp_Click">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" 
+                                          Glyph="&#xE70E;" 
+                                          FontWeight="Bold"
+                                          Foreground="{Binding Path=IsUp, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Green'}"/>
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Page>

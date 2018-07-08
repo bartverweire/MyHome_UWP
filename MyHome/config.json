@@ -1,0 +1,26 @@
+﻿{
+    "lights": [
+        {
+            "id": 31,
+            "name": "Bureau Centraal",
+            "dimmable": false
+        },
+        {
+            "id": 32,
+            "name": "Bureau Kasten",
+            "dimmable": false
+        }
+    ],
+    "shutters": [
+        {
+            "id": 81,
+            "type": "Shutter",
+            "name": "Bureau Voor"
+        },
+        {
+            "id": 82,
+            "type": "Shutter",
+            "name": "Bureau Zij"
+        }
+    ]
+}
