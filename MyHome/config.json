@@ -2,25 +2,183 @@
     "lights": [
         {
             "id": 31,
-            "name": "Bureau Centraal",
+            "name": "Bureau centraal",
             "dimmable": false
         },
         {
             "id": 32,
-            "name": "Bureau Kasten",
+            "name": "Bureau kasten",
+            "dimmable": false
+        },
+        {
+            "id": 35,
+            "name": "Salon",
+            "dimmable": true
+        },
+        {
+            "id": 36,
+            "name": "Eetkamer",
+            "dimmable": true
+        },
+        {
+            "id": 41,
+            "name": "Keuken centraal",
+            "dimmable": false
+        },
+        {
+            "id": 42,
+            "name": "Keuken spots",
+            "dimmable": false
+        },
+        {
+            "id": 43,
+            "name": "Keuken fornuis",
+            "dimmable": false
+        },
+        {
+            "id": 11,
+            "name": "Trap wand",
+            "dimmable": false
+        },
+        {
+            "id": 16,
+            "name": "Trap spots",
+            "dimmable": false
+        },
+        {
+            "id": 12,
+            "name": "Hall",
+            "dimmable": false
+        },
+        {
+            "id": 17,
+            "name": "Overloop",
+            "dimmable": false
+        },
+        {
+            "id": 25,
+            "name": "Slaapkamer",
+            "dimmable": false
+        },
+        {
+            "id": 28,
+            "name": "Dressing",
+            "dimmable": false
+        },
+        {
+            "id": 51,
+            "name": "Badkamer spots",
+            "dimmable": false
+        },
+        {
+            "id": 52,
+            "name": "Badkamer spiegel",
+            "dimmable": false
+        },
+        {
+            "id": 21,
+            "name": "Strijkkamer voor",
+            "dimmable": false
+        },
+        {
+            "id": 22,
+            "name": "Strijkkamer achter",
+            "dimmable": false
+        },
+        {
+            "id": 23,
+            "name": "Logeerkamer",
+            "dimmable": false
+        },
+        {
+            "id": 13,
+            "name": "WC beneden",
+            "dimmable": false
+        },
+        {
+            "id": 24,
+            "name": "WC boven",
+            "dimmable": false
+        },
+        {
+            "id": 44,
+            "name": "Berging",
+            "dimmable": false
+        },
+        {
+            "id": 53,
+            "name": "Garage",
+            "dimmable": false
+        },
+        {
+            "id": 15,
+            "name": "Kelder",
+            "dimmable": false
+        },
+        {
+            "id": 61,
+            "name": "Tuin voor",
+            "dimmable": false
+        },
+        {
+            "id": 64,
+            "name": "Tuin zij",
+            "dimmable": false
+        },
+        {
+            "id": 62,
+            "name": "Tuin achter",
             "dimmable": false
         }
     ],
     "shutters": [
         {
             "id": 81,
-            "type": "Shutter",
             "name": "Bureau Voor"
         },
         {
             "id": 82,
-            "type": "Shutter",
             "name": "Bureau Zij"
+        },
+        {
+            "id": 83,
+            "name": "Living salon"
+        },
+        {
+            "id": 84,
+            "name": "Living eetkamer"
+        },
+        {
+            "id": 86,
+            "name": "Living terras"
+        },
+        {
+            "id": 88,
+            "name": "Keuken"
+        },
+        {
+            "id": 72,
+            "name": "Slaapkamer"
+        },
+        {
+            "id": 71,
+            "name": "Badkamer"
+        },
+        {
+            "id": 74,
+            "name": "Logeerkamer"
+        },
+        {
+            "id": 73,
+            "name": "Strijkkamer"
+        },
+        {
+            "id": 75,
+            "name": "Overloop achter"
+        },
+        {
+            "id": 76,
+            "name": "Overloop voor"
         }
     ]
 }

@@ -9,24 +9,52 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <Style x:Key="ComponentListStyle" TargetType="ListView">
+            <Setter Property="Padding" Value="10,0,0,0" />
+        </Style>
+        
+        <Style x:Key="NoSpacesListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Height" Value="30" />
+            <Setter Property="MinHeight" Value="20" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter ContentMargin="0" SelectionCheckMarkVisualEnabled="False" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="0,0,0,15" />
+            <Setter Property="Padding" Value="10,0,0,0" />
+        </Style>
+    </Page.Resources>
+    
+    
     <Grid>
         <Grid.Resources>
             <local:ShutterStateConverter x:Key="ShutterStateConverter" />
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <TextBlock>Lights</TextBlock>
-            <ListView ItemsSource="{x:Bind Path=myHome.lights.components}">
+            <TextBlock Style="{StaticResource Title}">Lights</TextBlock>
+            <ListView ItemsSource="{x:Bind Path=myHome.lights.components}"
+                      ItemContainerStyle="{StaticResource NoSpacesListViewItemStyle}"
+                      Style="{StaticResource ComponentListStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Width="200" VerticalAlignment="Center" Text="{Binding Path=name}" />
-                            <TextBlock Width="20" VerticalAlignment="Center" Text="{Binding Path=Status, Mode=TwoWay}" />
                             <ToggleSwitch x:Name="LightStatus" IsOn="{Binding Path=IsOn, Mode=TwoWay}" Toggled="LightStatus_Toggled"
                                           HorizontalAlignment="Right"/>
                         </StackPanel>
@@ -36,32 +64,46 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBlock>Shutters</TextBlock>
-            <ListView ItemsSource="{x:Bind Path=myHome.shutters.components}">
+            <TextBlock Style="{StaticResource Title}">Shutters</TextBlock>
+            <ListView ItemsSource="{x:Bind Path=myHome.shutters.components}"
+                      ItemContainerStyle="{StaticResource NoSpacesListViewItemStyle}" 
+                      Style="{StaticResource ComponentListStyle}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Width="200" VerticalAlignment="Center" Text="{Binding Path=name}" />
-                            <TextBlock Width="20" VerticalAlignment="Center" Text="{Binding Path=Status, Mode=TwoWay}" />
-                            <Button x:Name="ShutterDown" Background="White" Click="ShutterDown_Click">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Width="Auto" VerticalAlignment="Center" Text="{Binding Path=name}" />
+                            <Button x:Name="ShutterDown" Grid.Row="0" Grid.Column="1" Background="White" Click="ShutterDown_Click">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" 
                                           Glyph="&#xE70D;" 
                                           FontWeight="Bold" 
+                                          FontSize="14"
                                           Foreground="{Binding Path=IsDown, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Green'}" />
                             </Button>
-                            <Button x:Name="ShutterStop" Background="White" Click="ShutterStop_Click">
+                            <Button x:Name="ShutterStop" Grid.Row="0" Grid.Column="2" Background="White" Click="ShutterStop_Click">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" 
                                           Glyph="&#xE711;"
-                                          FontWeight="Bold"
+                                          FontWeight="Bold" 
+                                          FontSize="14"
                                           Foreground="{Binding Path=IsStopped, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Red'}"/>
                             </Button>
-                            <Button x:Name="ShutterUp" Background="White" Click="ShutterUp_Click">
+                            <Button x:Name="ShutterUp" Grid.Row="0" Grid.Column="3" Background="White" Click="ShutterUp_Click">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" 
                                           Glyph="&#xE70E;" 
-                                          FontWeight="Bold"
+                                          FontWeight="Bold" 
+                                          FontSize="14"
                                           Foreground="{Binding Path=IsUp, Mode=TwoWay, Converter={StaticResource ShutterStateConverter}, ConverterParameter='Green'}"/>
                             </Button>
-                        </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
