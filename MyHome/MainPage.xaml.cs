@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -96,6 +97,46 @@ namespace MyHome
 
             Debug.WriteLine("Bringing shutter " + shutter.name + " up");
             myHome.setStatus(shutter, 1);
+        }
+
+        private void ShutterGroupUp_Click(object sender, RoutedEventArgs e)
+        {
+            Button shutterGroupButton = sender as Button;
+            ShutterGroup shutterGroup = shutterGroupButton.DataContext as ShutterGroup;
+
+            myHome.setStatus(shutterGroup, 1);
+        }
+
+        private void ShutterGroupStop_Click(object sender, RoutedEventArgs e)
+        {
+            Button shutterGroupButton = sender as Button;
+            ShutterGroup shutterGroup = shutterGroupButton.DataContext as ShutterGroup;
+
+            myHome.setStatus(shutterGroup, 0);
+        }
+
+        private void ShutterGroupDown_Click(object sender, RoutedEventArgs e)
+        {
+            Button shutterGroupButton = sender as Button;
+            ShutterGroup shutterGroup = shutterGroupButton.DataContext as ShutterGroup;
+
+            myHome.setStatus(shutterGroup, 2);
+        }
+
+        private void LightGroupOff_Click(object sender, RoutedEventArgs e)
+        {
+            Button lightGroupButton = sender as Button;
+            LightGroup lightGroup = lightGroupButton.DataContext as LightGroup;
+
+            myHome.setStatus(lightGroup, 0);
+        }
+
+        private void LightGroupOn_Click(object sender, RoutedEventArgs e)
+        {
+            Button lightGroupButton = sender as Button;
+            LightGroup lightGroup = lightGroupButton.DataContext as LightGroup;
+
+            myHome.setStatus(lightGroup, 1);
         }
     }
 }

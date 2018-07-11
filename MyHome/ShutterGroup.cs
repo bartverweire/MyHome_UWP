@@ -8,5 +8,8 @@ namespace MyHome
 {
     public class ShutterGroup : OWNGroup<Shutter>
     {
+        public ShutterGroup(string name) : base(name)
+        {
+        }
     }
 }

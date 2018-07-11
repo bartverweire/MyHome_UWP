@@ -9,10 +9,12 @@ namespace MyHome
 {
     public class OWNGroup<OWNComponent>
     {
+        public string name { get; set; }
         public ObservableCollection<OWNComponent> components { get; set; }
 
-        public OWNGroup()
+        public OWNGroup(string name) 
         {
+            this.name = name;
             components = new ObservableCollection<OWNComponent>();
         }
 

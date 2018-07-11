@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -24,11 +25,17 @@ namespace MyHome
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LightGroup lights { get; set; } = new LightGroup();
-        public ShutterGroup shutters { get; set; } = new ShutterGroup();
+        public LightGroup lights { get; set; } = new LightGroup("Lights");
+        public ShutterGroup shutters { get; set; } = new ShutterGroup("Shutters");
+
+        public ObservableCollection<LightGroup> lightGroups;
+        public ObservableCollection<ShutterGroup> shutterGroups;
 
         public MyHomeConfig()
         {
+            lightGroups = new ObservableCollection<LightGroup>();
+            shutterGroups = new ObservableCollection<ShutterGroup>();
+
             _monitor = new OWNMonitor("192.168.0.103", 20000, this);
             _command = new OWNCommand("192.168.0.103", 20000, this);
             _monitor.start();
@@ -70,12 +77,71 @@ namespace MyHome
                 components[shutter.id] = shutter;
             }
 
+            foreach (JsonValue jsonLightGroup in jsonConfig.GetNamedArray("lightGroups"))
+            {
+                string name = jsonLightGroup.GetObject().GetNamedString("name");
+                JsonArray jsonLightsArray = jsonLightGroup.GetObject().GetNamedArray("lights");
+
+                LightGroup lightGroup = new LightGroup(name);
+                foreach (JsonValue jsonLight in jsonLightsArray)
+                {
+                    lightGroup.Add(components[(int)jsonLight.GetNumber()] as Light);
+                }
+                lightGroups.Add(lightGroup);
+            }
+
+            foreach (JsonValue jsonShutterGroup in jsonConfig.GetNamedArray("shutterGroups"))
+            {
+                string name = jsonShutterGroup.GetObject().GetNamedString("name");
+                JsonArray jsonShuttersArray = jsonShutterGroup.GetObject().GetNamedArray("shutters");
+
+                ShutterGroup shutterGroup = new ShutterGroup(name);
+                foreach (JsonValue jsonShutter in jsonShuttersArray)
+                {
+                    shutterGroup.Add(components[(int)jsonShutter.GetNumber()] as Shutter);
+                }
+                shutterGroups.Add(shutterGroup);
+            }
+
         }
 
         public async void setStatus(OWNComponent component, int status)
         {
             await _command.Send(new string[] { component.getCommand(status) });
         }
+
+        public async void setStatus(OWNGroup<Shutter> group, int status)
+        {
+            string[] commands = new string[group.components.Count];
+            for (int i = 0; i < group.components.Count; i++)
+            {
+                commands[i] = components[i].getCommand(status);
+            }
+
+            await _command.Send(commands);
+        }
+
+        public async void setStatus(OWNGroup<Light> group, int status)
+        {
+            string[] commands = new string[group.components.Count];
+            for (int i = 0; i < group.components.Count; i++)
+            {
+                commands[i] = group.components[i].getCommand(status);
+            }
+
+            await _command.Send(commands);
+        }
+
+        //public async void setStatus(ObservableCollection<OWNComponent> components, int status)
+        //{
+        //    string[] commands = new string[components.Count];
+        //    for (int i = 0; i < components.Count; i++)
+        //    {
+        //        commands[i] = components[i].getCommand(status);
+        //    }
+
+        //    await _command.Send(commands);
+        //}
 
         public async void getStatus(OWNComponent component)
         {

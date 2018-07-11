@@ -180,5 +180,37 @@
             "id": 76,
             "name": "Overloop voor"
         }
+    ],
+    "lightGroups": [
+        {
+            "name": "Bureau",
+            "lights": [ 31, 32 ]
+        },
+        {
+            "name": "Living",
+            "lights": [ 35, 36 ]
+        },
+        {
+            "name": "Keuken",
+            "lights": [ 41, 42, 43 ]
+        },
+        {
+            "name": "Beneden",
+            "lights": [ 31, 32, 35, 36, 41, 42, 43, 12, 13, 44, 53, 15, 61, 64, 62 ]
+        },
+        {
+            "name": "Boven",
+            "lights": [ 16, 17, 25, 28, 51, 52, 21, 22, 23, 24 ]
+        }
+    ],
+    "shutterGroups": [
+        {
+            "name": "Beneden",
+            "shutters": [ 81, 82, 83, 84, 86, 88 ]
+        },
+        {
+            "name": "Boven", 
+            "shutters" :  [72, 71, 74, 73, 75, 76]
+        }
     ]
 }
