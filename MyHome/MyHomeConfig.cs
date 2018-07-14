@@ -17,6 +17,7 @@ namespace MyHome
 {
     public class MyHomeConfig : INotifyPropertyChanged, IOWNEventListener
     {
+        private String TAG = "MyHomeConfig - ";
         private String configPath = "config.json";
 
         private OWNMonitor _monitor;
@@ -115,7 +116,7 @@ namespace MyHome
             string[] commands = new string[group.components.Count];
             for (int i = 0; i < group.components.Count; i++)
             {
-                commands[i] = components[i].getCommand(status);
+                commands[i] = group.components[i].getCommand(status);
             }
 
             await _command.Send(commands);
@@ -131,17 +132,6 @@ namespace MyHome
 
             await _command.Send(commands);
         }
-
-        //public async void setStatus(ObservableCollection<OWNComponent> components, int status)
-        //{
-        //    string[] commands = new string[components.Count];
-        //    for (int i = 0; i < components.Count; i++)
-        //    {
-        //        commands[i] = components[i].getCommand(status);
-        //    }
-
-        //    await _command.Send(commands);
-        //}
 
         public async void getStatus(OWNComponent component)
         {
@@ -191,6 +181,7 @@ namespace MyHome
 
         void IOWNEventListener.handleEvent(string message)
         {
+            Logger.WriteLog(TAG, "Received message " + message);
             string[] msgSeparator = new string[] { "##" };
             string msgPattern = @"^\*(\d+)\*(\d+)\*(\d+)$";
             

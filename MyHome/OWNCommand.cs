@@ -81,32 +81,45 @@ namespace MyHome
                             await writer.StoreAsync();
                             await writer.FlushAsync();
 
-                            Debug.WriteLine(TAG + "Message " + message + " sent");
+                            Logger.WriteLog(TAG, "Message " + message + " sent");
 
+                            //// Read the string.
+                            //actualStringLength = await reader.LoadAsync(256);
+
+                            //string ownResponse = reader.ReadString(actualStringLength);
+                            //Logger.WriteLog(TAG, ownResponse);
+
+                            //_listener.handleEvent(ownResponse);
                             // Read the string.
                             actualStringLength = await reader.LoadAsync(256);
 
-                            string ownResponse = reader.ReadString(actualStringLength);
-                            Debug.WriteLine(TAG + ownResponse);
+                            string respBuffer = "";
+                            string respPart = "";
+                            // Keep reading until we consume the complete stream.
+                            while (reader.UnconsumedBufferLength > 0)
+                            {
+                                respPart += reader.ReadString(reader.UnconsumedBufferLength);
+                            }
 
-                            _listener.handleEvent(ownResponse);
+                            respBuffer = respBuffer + respPart;
+
+                            Logger.WriteLog(TAG, respBuffer);
+                            int splitPos;
+                            while ((splitPos = respBuffer.IndexOf("##")) >= 0)
+                            {
+                                string ownResponse = respBuffer.Substring(0, respBuffer.IndexOf("##") + 2);
+                                respBuffer = respBuffer.Substring(respBuffer.IndexOf("##") + 2);
+
+                                Logger.WriteLog(TAG, "Sending " + ownResponse + " to event handler, and keeping " + respBuffer + " in buffer");
+                                _listener.handleEvent(ownResponse);
+                            }
                         }
 
-                        Debug.WriteLine(TAG + "All messages sent. Waiting for other responses ...");
+                        Logger.WriteLog(TAG, "All messages sent. Waiting for other responses ...");
 
                         writer.DetachStream();
 
-                        // wait for remaining messages
-                        //while (true)
-                        //{
-                        //    // Read the string.
-                        //    actualStringLength = await reader.LoadAsync(256);
-
-                        //    string ownResponse = reader.ReadString(actualStringLength);
-                        //    Debug.WriteLine(TAG + "New response retrieved: " + ownResponse);
-
-                        //    _listener.handleEvent(ownResponse);
-                        //}
+                        
                     }
                     catch (Exception exception)
                     {

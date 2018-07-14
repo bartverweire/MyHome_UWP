@@ -209,8 +209,20 @@
             "shutters": [ 81, 82, 83, 84, 86, 88 ]
         },
         {
-            "name": "Boven", 
-            "shutters" :  [72, 71, 74, 73, 75, 76]
+            "name": "Boven",
+            "shutters": [ 72, 71, 74, 73, 75, 76 ]
+        },
+        {
+            "name": "Bureau",
+            "shutters": [ 81, 82 ]
+        },
+        {
+            "name": "Beneden Zij",
+            "shutters": [ 82, 83, 84 ]
+        },
+        {
+            "name": "Beneden Achter",
+            "shutters": [ 86, 88 ]
         }
     ]
 }

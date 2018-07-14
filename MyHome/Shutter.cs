@@ -9,6 +9,7 @@ namespace MyHome
 {
     public class Shutter : OWNComponent
     {
+        public string TAG = "Shutter - ";
         public bool IsStopped
         {
             get
@@ -46,7 +47,7 @@ namespace MyHome
                 OnPropertyChanged("IsDown");
                 OnPropertyChanged("IsUp");
                 OnPropertyChanged("IsStopped");
-                Debug.WriteLine("===> Setting status for shutter " + id + " to " + value);
+                Logger.WriteLog(TAG, "===> Setting status for shutter " + id + " to " + value);
             }
         }
 

@@ -12,7 +12,7 @@ namespace MyHome
 {
     public class OWNMonitor
     {
-        private string TAG = "Command - ";
+        private string TAG = "Monitor - ";
         private HostName _host;
         private string _port;
 
@@ -61,7 +61,7 @@ namespace MyHome
                         uint actualStringLength = await reader.LoadAsync(256);
 
                         // acknowledgement should be *#*1##
-                        Debug.WriteLine(TAG + reader.ReadString(actualStringLength));
+                        Debug.Write(TAG + reader.ReadString(actualStringLength));
 
                         // now send the handshake
                         byte[] hs = Encoding.ASCII.GetBytes(_handshake);
@@ -75,16 +75,34 @@ namespace MyHome
                         // acknowledgement should be *#*1##
                         Debug.WriteLine(TAG + reader.ReadString(actualStringLength));
 
+                        string respBuffer = "";
+
                         // wait for other messages
                         while (true)
                         {
                             // Read the string.
                             actualStringLength = await reader.LoadAsync(256);
 
-                            string ownResponse = reader.ReadString(actualStringLength);
-                            Debug.WriteLine(TAG + ownResponse);
+                            string respPart = "";
+                            // Keep reading until we consume the complete stream.
+                            while (reader.UnconsumedBufferLength > 0)
+                            {
+                                respPart += reader.ReadString(reader.UnconsumedBufferLength);
+                            }
 
-                            _listener.handleEvent(ownResponse);
+                            respBuffer = respBuffer + respPart;
+
+                            Logger.WriteLog(TAG, respBuffer);
+                            int splitPos;
+                            while ((splitPos = respBuffer.IndexOf("##")) >= 0)
+                            {
+                                string ownResponse = respBuffer.Substring(0, respBuffer.IndexOf("##") + 2);
+                                respBuffer = respBuffer.Substring(respBuffer.IndexOf("##") + 2);
+
+                                Logger.WriteLog(TAG, "Sending " + ownResponse + " to event handler, and keeping " + respBuffer + " in buffer");
+                                _listener.handleEvent(ownResponse);
+                            }
+                            
                         }
                     }
                     catch (Exception exception)
@@ -148,12 +166,12 @@ namespace MyHome
         {
             if (exception != null)
             {
-                Debug.WriteLine(TAG + exception.Message);
+                Logger.WriteLog(TAG, exception.Message);
             }
             
             if (message != null)
             {
-                Debug.WriteLine(TAG + message);
+                Logger.WriteLog(TAG, message);
             }
 
             _socket.Dispose();

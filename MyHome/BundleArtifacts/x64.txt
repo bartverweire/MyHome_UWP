@@ -1,0 +1,1 @@
+MainPackage=E:\Workspace\Windows\UWP\MyHome\MyHome\bin\x64\Release\MyHome_1.0.5.0_x64.appx

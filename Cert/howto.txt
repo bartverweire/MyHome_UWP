@@ -1,0 +1,6 @@
+Open a PowerShell in elevated mode
+
+New-SelfSignedCertificate -Type Custom -Subject "CN=Bart Verweire, O=vBit, C=BE" -KeyUsage DigitalSignature -FriendlyName "Bart Verweire" -CertStoreLocation "Cert:\LocalMachine\My"
+
+$pwd = ConvertTo-SecureString -String myhome -Force -AsPlainText 
+Export-PfxCertificate -cert "Cert:\LocalMachine\My\C06B2B6AA5CFE03006BBFFA5F2CFFED5884E971E" -FilePath E:\Workspace\Windows\UWP\MyHome\Cert\myhome.pfx -Password $pwd

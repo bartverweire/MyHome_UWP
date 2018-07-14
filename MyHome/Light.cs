@@ -9,6 +9,7 @@ namespace MyHome
 {
     public class Light : OWNComponent
     {
+        private string TAG = "Light - ";
         public bool dimmable = false;
         public bool IsOn
         {
@@ -38,7 +39,7 @@ namespace MyHome
                 this._status = value;
                 OnPropertyChanged();
                 OnPropertyChanged("IsOn");
-                Debug.WriteLine("===> Setting status for light " + id + " to " + value);
+                Logger.WriteLog(TAG, "===> Setting status for light " + id + " to " + value);
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MetroLog;
+using MetroLog.Targets;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -31,6 +33,8 @@ namespace MyHome
 
         public MainPage()
         {
+            LogManagerFactory.DefaultConfiguration.AddTarget(LogLevel.Debug, LogLevel.Fatal, new StreamingFileTarget());
+
             this.InitializeComponent();
             this.DataContext = this;
 
